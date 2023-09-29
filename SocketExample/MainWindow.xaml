@@ -1,0 +1,130 @@
+﻿<Window x:Class="SocketExample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SocketExample"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+           
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="80" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <ScrollViewer  Grid.ColumnSpan="2">
+            <ItemsControl ItemsSource="{Binding Messages}" VerticalAlignment="Bottom">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel >
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Sender}" Value="Server">
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Sender}" Value="Client">
+                                            <Setter Property="HorizontalAlignment" Value="Left" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                            <TextBlock FontSize="20" Text="{Binding Sender}" >
+
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Sender}" Value="Server" >
+                                                <Setter Property="HorizontalAlignment" Value="Right"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Sender}" Value="Client" >
+                                                <Setter Property="HorizontalAlignment" Value="Left"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <Border BorderBrush="Black" CornerRadius="8" BorderThickness="0" Padding="5" Margin="5" >
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Style.Triggers >
+                                            <DataTrigger Binding="{Binding Sender}" Value="Client">
+                                                <Setter Property="Background" Value="#FF00A884" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Sender}" Value="Server">
+                                                <Setter Property="Background" Value="#3BC2FF" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <StackPanel>
+                                    <TextBlock FontSize="20" Text="{Binding Text}" TextWrapping="Wrap" />
+                                    <TextBlock FontSize="10" Text="{Binding UID}" />
+                                    <Grid HorizontalAlignment="Right">
+                                        <Grid.Style>
+                                            <Style TargetType="Grid">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Sender}" Value="Server" >
+                                                        <Setter Property="Visibility" Value="Hidden"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
+                                        <TextBlock FontSize="30" FontFamily="Segoe MDL2 Assets" Text="&#xF1D9;" VerticalAlignment="Center"  >
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Received}" Value="true" >
+                                                            <Setter Property="Foreground" Value="LightGreen"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Received}" Value="false" >
+                                                            <Setter Property="Foreground" Value="LightGray"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                        <TextBlock FontSize="30" FontFamily="Segoe MDL2 Assets" Text="&#xF1D8;" VerticalAlignment="Center" >
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Read}" Value="true" >
+                                                            <Setter Property="Foreground" Value="LightGreen"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Read}" Value="false" >
+                                                            <Setter Property="Foreground" Value="LightGray"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </StackPanel>
+
+                            </Border>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <Border BorderThickness="0 1 0 0" BorderBrush="LightGray" Grid.Row="1" Grid.ColumnSpan="2"  />
+        <TextBox Grid.Row="1" Margin="5,5,5,5" Padding="5,5,5,5"  TextWrapping="Wrap" Text="{Binding MessageDraft,UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBox_KeyDown"  />
+        <Button Grid.Row="1" Grid.Column="1"  Margin="5,5,5,5" Padding="5,5,5,5" Click="SendButton_Click"   >
+
+            <Button.Content>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Senden"  VerticalAlignment="Top" Height="15" Padding="0,0,2,0"/>
+                    <TextBlock FontSize="12" FontFamily="Segoe MDL2 Assets" Text="&#xE724;" VerticalAlignment="Center" />
+                </StackPanel>
+                
+            </Button.Content>
+        </Button>
+
+
+    </Grid>
+</Window>
